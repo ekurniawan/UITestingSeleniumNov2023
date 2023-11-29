@@ -34,15 +34,32 @@ public class BaseTest
         switch (browserName.ToLower())
         {
             case "chrome":
-                return new ChromeDriver();
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArguments(GetBrowserArguments());
+                return new ChromeDriver(chromeOptions);
             case "firefox":
-                return new FirefoxDriver();
+                var firefoxOptions = new FirefoxOptions();
+                firefoxOptions.AddArguments(GetBrowserArguments());
+                return new FirefoxDriver(firefoxOptions);
             case "safari":
+                //var safariOptions = new SafariOptions();
+                //safariOptions.AddArguments(GetBrowserArguments());
                 return new SafariDriver();
             case "edge":
-                return new EdgeDriver();
+                var edgeOptions = new EdgeOptions();
+                edgeOptions.AddArguments(GetBrowserArguments());
+                return new EdgeDriver(edgeOptions);
             default:
                 throw new Exception("Browser not supported");
         }
+    }
+
+    private string[] GetBrowserArguments()
+    {
+        if (ConfigurationProvider.Configuration["browserArguments"] != null)
+        {
+            return ConfigurationProvider.Configuration["browserArguments"].Split(",");
+        }
+        return Array.Empty<string>();
     }
 }
