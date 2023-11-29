@@ -18,7 +18,7 @@ public class BaseTest
     [SetUp]
     public void Setup()
     {
-        driver = new SafariDriver();
+        driver = CreateDriver(ConfigurationProvider.Configuration["browser"]);
         driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
         driver.Navigate().GoToUrl("http://localhost:4200");
     }
