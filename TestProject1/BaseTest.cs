@@ -1,4 +1,7 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Safari;
 
 namespace TestProject1;
@@ -24,5 +27,22 @@ public class BaseTest
     public void TearDown()
     {
         driver.Quit();
+    }
+
+    private IWebDriver CreateDriver(string browserName)
+    {
+        switch (browserName.ToLower())
+        {
+            case "chrome":
+                return new ChromeDriver();
+            case "firefox":
+                return new FirefoxDriver();
+            case "safari":
+                return new SafariDriver();
+            case "edge":
+                return new EdgeDriver();
+            default:
+                throw new Exception("Browser not supported");
+        }
     }
 }
